@@ -1,0 +1,6 @@
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Builder\bin\Debug\Builder.exe.config
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Builder\bin\Debug\Builder.exe
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Builder\bin\Debug\Builder.pdb
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Builder\obj\Debug\Builder.csprojResolveAssemblyReference.cache
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Builder\obj\Debug\Builder.exe
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Builder\obj\Debug\Builder.pdb

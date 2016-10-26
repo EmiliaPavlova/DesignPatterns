@@ -1,0 +1,5 @@
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Prototype\bin\Debug\Prototype.exe.config
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Prototype\bin\Debug\Prototype.exe
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Prototype\bin\Debug\Prototype.pdb
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Prototype\obj\Debug\Prototype.exe
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Prototype\obj\Debug\Prototype.pdb

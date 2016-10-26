@@ -8,7 +8,7 @@
     /// MainApp startup class for Real-World 
     /// Factory Method Design Pattern.
     /// </summary>
-    class MainApp
+    public class StartUp
     {
         static void Main()
         {

@@ -1,0 +1,6 @@
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Singleton\bin\Debug\Singleton.exe.config
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Singleton\bin\Debug\Singleton.exe
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Singleton\bin\Debug\Singleton.pdb
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Singleton\obj\Debug\Singleton.csprojResolveAssemblyReference.cache
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Singleton\obj\Debug\Singleton.exe
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Singleton\obj\Debug\Singleton.pdb
