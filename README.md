@@ -1,6 +1,13 @@
-# Creational Design Patterns
+# Design patterns
 
-Design patterns are general reusable solutions to common problems that occurred in software designing. There are broadly 3 categories of design patterns, i.e., Creational, Behavioral and Structural. 
+Design patterns are general reusable solutions to common problems that occurred in software designing. There are broadly 3 categories of design patterns:
+[Creational](#creational-design-patterns)
+[Structural](#structural-design-patterns)
+[Behavioral](#behavioral-design-patterns)
+
+<!-- # <a id="creational"></a>Creational Design Patterns -->
+## Creational Design Patterns
+
 The purpose of creational design patterns is to create or instantiate objects.
 
 [Abstract factory](#abstract-factory)
@@ -9,7 +16,7 @@ The purpose of creational design patterns is to create or instantiate objects.
 [Prototype](#prototype)
 [Singleton](#singleton)
 
-## Abstract factory 	
+### Abstract factory 	
 
 #### Motivation
 The global trend in programming is to avoid the idea of adding code to existing classes in order to make them support encapsulating more general information for preventing too complicated changes in the code of the application. This is where the Abstract Factory pattern comes. The Abstract Factory pattern is used to create families of objects.	By using this pattern a framework is defined, which produces objects that follow a general pattern. This factory is paired with any concrete factory to produce objects that follow the similar pattern.  In other words, the Abstract Factory is a super-factory which creates other factories (Factory of factories).
@@ -47,7 +54,7 @@ The Abstract Factory pattern isolates the creation of objects from the client th
 ```
 using System;
  
-namespace DoFactory.GangOfFour.Abstract.Structural
+namespace Abstract.Structural
 {
   /// <summary>
   /// MainApp startup class for Structural
@@ -200,7 +207,7 @@ An application usually needs only one instance of the ConcreteFactory class per 
 
 For simplifying the code and increase the performance the **Prototype design pattern** can be used instead of Factory method, especially when there are many product families. In this case the concrete factory is initiated with a prototypical instance of each product in the family and when a new one is needed instead of creating it, the existing prototype is cloned. This approach eliminates the need for a new concrete factory for each new family of products.
 
-#### C# examples for their use
+#### C# example
 [Animal Worlds Example](https://github.com/EmiliaPavlova/DesignPatterns/tree/master/DesignPatternsExample/AbstractFactory)
 
 The example demonstrates the creation of different animal worlds using different factories - one for African animals and one for American animals. Although the animals created by the Continent factories are different, the interactions among the animals remain the same. 
@@ -209,28 +216,181 @@ The example demonstrates the creation of different animal worlds using different
 ![Abstract factory diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/abstract.gif)
 
 <!-- # <a id="builder"></a>Builder  -->
-## Builder 
+### Builder 
 
 #### Motivation
+This pattern allows a client object to construct a complex object by specifying only its type and content, being shielded from the details related to the object's representation. This way the construction process can be used to create different representations. The logic of this process is isolated form the actual steps used in creating the complex object, so the process can be used again to create a different object form the same set of simple objects as the first one.
+
 #### Intent
+Separate the construction of a complex object from its representation so that the same construction process can create different representations. 
+
 #### Applicability
-#### Known uses
+Builder Pattern is used when the creation algorithm of a complex object is independent from the parts that actually compose the object and when the system needs to allow different representations for the objects that are being built.
+
 #### Implementation
-Create a factory object that contains several methods. Each method is called separately and performs a necessary step in the building process. When the client object is through, it calls a method to get the constructed object returned to it.  Derive classes from the builder object to specialize steps. 
+
+The Builder design pattern uses the Factory Builder pattern to decide which concrete class to initiate in order to build the desired type of object. The client, that may be either another object or the actual client that calls the main() method of the application, initiates the Builder and Director class. The Builder represents the complex object that needs to be built in terms of simpler objects and types. The constructor in the Director class receives a Builder object as a parameter from the Client and is responsible for calling the appropriate methods of the Builder class. In order to provide the Client with an interface for all concrete Builders, the Builder class should be an abstract one. This way you can add new types of complex objects by only defining the structure and reusing the logic for the actual construction process. The Client is the only one that needs to know about the new types, the Director needing to know which methods of the Builder to call.
 
 #### Participants
-#### Consequences
-#### Structure
+
+ - The Builder class - specifies an abstract interface for creating parts of a Product object.
+ - The ConcreteBuilder - constructs and puts together parts of the product by implementing the Builder interface. It defines and keeps track of the representation it creates and provides an interface for saving the product.
+ - The Director class - constructs the complex object using the Builder interface.
+ - The Product represents the complex object that is being built.
+
+#### Structural code in C#
+```
+using System;
+using System.Collections.Generic;
+ 
+namespace Builder.Structural
+{
+  /// <summary>
+  /// MainApp startup class for Structural
+  /// Builder Design Pattern.
+  /// </summary>
+  public class MainApp
+  {
+    /// <summary>
+    /// Entry point into console application.
+    /// </summary>
+    public static void Main()
+    {
+      // Create director and builders
+      Director director = new Director();
+ 
+      Builder b1 = new ConcreteBuilder1();
+      Builder b2 = new ConcreteBuilder2();
+ 
+      // Construct two products
+      director.Construct(b1);
+      Product p1 = b1.GetResult();
+      p1.Show();
+ 
+      director.Construct(b2);
+      Product p2 = b2.GetResult();
+      p2.Show();
+ 
+      // Wait for user
+      Console.ReadKey();
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Director' class
+  /// </summary>
+  class Director
+  {
+    // Builder uses a complex series of steps
+    public void Construct(Builder builder)
+    {
+      builder.BuildPartA();
+      builder.BuildPartB();
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Builder' abstract class
+  /// </summary>
+  abstract class Builder
+  {
+    public abstract void BuildPartA();
+    public abstract void BuildPartB();
+    public abstract Product GetResult();
+  }
+ 
+  /// <summary>
+  /// The 'ConcreteBuilder1' class
+  /// </summary>
+  class ConcreteBuilder1 : Builder
+  {
+    private Product _product = new Product();
+ 
+    public override void BuildPartA()
+    {
+      _product.Add("PartA");
+    }
+ 
+    public override void BuildPartB()
+    {
+      _product.Add("PartB");
+    }
+ 
+    public override Product GetResult()
+    {
+      return _product;
+    }
+  }
+ 
+  /// <summary>
+  /// The 'ConcreteBuilder2' class
+  /// </summary>
+  class ConcreteBuilder2 : Builder
+  {
+    private Product _product = new Product();
+ 
+    public override void BuildPartA()
+    {
+      _product.Add("PartX");
+    }
+ 
+    public override void BuildPartB()
+    {
+      _product.Add("PartY");
+    }
+ 
+    public override Product GetResult()
+    {
+      return _product;
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Product' class
+  /// </summary>
+  class Product
+  {
+    private List<string> _parts = new List<string>();
+ 
+    public void Add(string part)
+    {
+      _parts.Add(part);
+    }
+ 
+    public void Show()
+    {
+      Console.WriteLine("\nProduct Parts -------");
+      foreach (string part in _parts)
+        Console.WriteLine(part);
+    }
+  }
+}
+```
+Output
+```
+Product Parts -------
+PartA
+PartB
+
+Product Parts -------
+PartX
+PartY
+```
+
 #### Related patterns
-#### C# examples for their use
+The Builder design pattern is very similar, at some extent, to the Abstract Factory pattern. That's why it is important to be able to make the difference between the situations when one or the other is used. 
+In the case of the Abstract Factory, the client uses the factory's methods to create its own objects. In the Builder's case, the Builder class is instructed on how to create the object and then it is asked for it, but the way that the class is put together is up to the Builder class, this detail making the difference between the two patterns.
+
+#### C# example
+[Vehicle builder](https://github.com/EmiliaPavlova/DesignPatterns/tree/master/DesignPatternsExample/Builder)
+
+The example demonstates the Builder pattern in which different vehicles are assembled in a step-by-step fashion. The Shop uses VehicleBuilders to construct a variety of Vehicles in a series of sequential steps. 
+
 #### A UML diagram or image of the pattern
 ![Builder diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/builder.gif)
 
-**Indicators in analysis:** Several different kinds of complex objects can be built with the same overall build process, but where there is variation in the individual construction steps.  
-**Indicators in design:** You want to hide the implementation of instantiating complex object, or you want to bring together all of the rules for instantiating complex objects. 
-
 <!-- # <a id="factory-method"></a>Factory Method -->
-## Factory Method 
+### Factory Method 
 
 #### Motivation
 The Factory method defines an interface for creating an object, but leaves the choice of its type to the subclasses, creation being deferred at run-time. It is related to the idea on which libraries work - a library uses abstract classes for defining and maintaining relations between objects. One type of responsibility is creating such objects. The library knows when an object needs to be created, but not what kind of object it should create, this being specific to the application using the library. 
@@ -262,7 +422,7 @@ All concrete products are subclasses of the Product class, so all of them have t
 ```
 using System;
  
-namespace DoFactory.GangOfFour.Factory.Structural
+namespace Factory.Structural
 {
   /// <summary>
   /// MainApp startup class for Structural 
@@ -352,7 +512,7 @@ Created ConcreteProductA
 Created ConcreteProductB
 ```
 
-#### C# examples for their use
+#### C# example
 [Document creation](https://github.com/EmiliaPavlova/DesignPatterns/tree/master/DesignPatternsExample/FactoryMethod)
 
 The example demonstrates the Factory method offering flexibility in creating different documents. The derived Document classes Report and Resume instantiate extended versions of the Document class. The Factory method is called in the constructor of the Document base class. 
@@ -361,37 +521,155 @@ The example demonstrates the Factory method offering flexibility in creating dif
 ![Factory method diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/factory.gif)
 
 <!-- # <a id="prototype"></a>Prototype -->
-## Prototype 
+### Prototype 
 
 #### Motivation
+The Prototype design pattern allows an object to create customized objects without knowing their class or any details of how to create them. 
+
 #### Intent
+Specify the kind of objects to create using a prototypical instance, and create new objects by copying this prototype.
+
 #### Applicability
+Use Prototype Pattern when a system should be independent of how its products are created, composed, and represented, and classes to be instantiated are specified at run-time or avoiding the creation of a factory hierarchy is needed or it is more convenient to copy an existing instance than to create a new one.
+
 #### Known uses
+When objects being instantiated need to look like a copy of a particular object.  Allows for dynamically specifying what our instantiated objects look like.  
+If the cost of creating a new object is large and creation is resource intensive, it is better to clone the object.
+
 #### Implementation
 Set up concrete classes of the class needing to be cloned. Each concrete class will construct itself to the appropriate value (optionally based on input parameters). When a new object is needed, clone an instantiation of this prototypical object. 
 
 #### Participants
-#### Consequences
-#### Structure
+
+ - Client - creates a new object by asking a prototype to clone itself.
+ - Prototype - declares an interface for cloning itself.
+ - ConcretePrototype - implements the operation for cloning itself.
+
+The process of cloning starts with an initialized and instantiated class. The Client asks for a new object of that type and sends the request to the Prototype class. A ConcretePrototype, depending of the type of object is needed, will handle the cloning through the Clone() method, making a new instance of itself.
+
+#### Structural code in C# 
+```
+using System;
+ 
+namespace Prototype.Structural
+{
+  /// <summary>
+  /// MainApp startup class for Structural
+  /// Prototype Design Pattern.
+  /// </summary>
+  class MainApp
+  {
+    /// <summary>
+    /// Entry point into console application.
+    /// </summary>
+    static void Main()
+    {
+      // Create two instances and clone each
+ 
+      ConcretePrototype1 p1 = new ConcretePrototype1("I");
+      ConcretePrototype1 c1 = (ConcretePrototype1)p1.Clone();
+      Console.WriteLine("Cloned: {0}", c1.Id);
+ 
+      ConcretePrototype2 p2 = new ConcretePrototype2("II");
+      ConcretePrototype2 c2 = (ConcretePrototype2)p2.Clone();
+      Console.WriteLine("Cloned: {0}", c2.Id);
+ 
+      // Wait for user
+      Console.ReadKey();
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Prototype' abstract class
+  /// </summary>
+  abstract class Prototype
+  {
+    private string _id;
+ 
+    // Constructor
+    public Prototype(string id)
+    {
+      this._id = id;
+    }
+ 
+    // Gets id
+    public string Id
+    {
+      get { return _id; }
+    }
+ 
+    public abstract Prototype Clone();
+  }
+ 
+  /// <summary>
+  /// A 'ConcretePrototype' class 
+  /// </summary>
+  class ConcretePrototype1 : Prototype
+  {
+    // Constructor
+    public ConcretePrototype1(string id)
+      : base(id)
+    {
+    }
+ 
+    // Returns a shallow copy
+    public override Prototype Clone()
+    {
+      return (Prototype)this.MemberwiseClone();
+    }
+  }
+ 
+  /// <summary>
+  /// A 'ConcretePrototype' class 
+  /// </summary>
+  class ConcretePrototype2 : Prototype
+  {
+    // Constructor
+    public ConcretePrototype2(string id)
+      : base(id)
+    {
+    }
+ 
+    // Returns a shallow copy
+    public override Prototype Clone()
+    {
+      return (Prototype)this.MemberwiseClone();
+    }
+  }
+}
+```
+Output
+```
+Cloned: I
+Cloned: II
+```
+
 #### Related patterns
-#### C# examples for their use
+The Prototype design pattern sounds a lot like the Factory Method pattern. The difference is the fact that for the Factory the palette of prototypical objects never contains more than one object.
+
+#### C# example
+[Color objects](https://github.com/EmiliaPavlova/DesignPatterns/tree/master/DesignPatternsExample/Prototype)
+
+The example demonstrates the Prototype pattern in which new Color objects are created by copying pre-existing, user-defined Colors of the same type. 
+
 #### A UML diagram or image of the pattern
 ![Prototype diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/prototype.gif)
 
-**Indicators in analysis:** There are prototypical instances of things. 
-**Indicators in design:** When objects being instantiated need to look like a copy of a particular object.  Allows for dynamically specifying what our instantiated objects look like.  
-
 <!-- # <a id="singleton"></a>Singleton -->
-## Singleton 
+### Singleton 
 
 #### Motivation
+The Singleton pattern is one of the simplest design patterns. It involves only one class which is responsible to instantiate itself, to make sure it creates not more than one instance. In the same time it provides a global point of access to that instance. In this case the same instance can be used from everywhere, being impossible to invoke directly the constructor each time.
 
 #### Intent
 Ensure a class has only one instance and provide a global point of access to it. 
 
 #### Applicability
+The Singleton pattern should be used when there must be exactly one instance of a class, and when it must be accessible to clients from a global access point. 
 
 #### Known uses
+Sometimes it's important to have only one instance for a class. For example, in a system there should be only one window manager, or only a file system or only a print spooler. 
+Usually Singletons are used for centralized management of internal or external resources and they provide a global point of access to themselves.
 
 #### Implementation
 Add a static member to the class that refers to the first instantiation of this object (initially it is null). Then, add a static method that instantiates this class if this member is null (and sets this member’s value) and then returns the value of this 
@@ -399,18 +677,81 @@ member. Finally, set the constructor to protected or private so no one can direc
 
 #### Participants
 
-#### Consequences
+ - Singleton - defines an Instance operation that lets clients access its unique instance (instance is a class operation) and is responsible for creating and maintaining its own unique instance.
 
-#### Structure
+#### Structural code in C# 
+```
+using System;
+ 
+namespace Singleton.Structural
+{
+  /// <summary>
+  /// MainApp startup class for Structural
+  /// Singleton Design Pattern.
+  /// </summary>
+  class MainApp
+  {
+    /// <summary>
+    /// Entry point into console application.
+    /// </summary>
+    static void Main()
+    {
+      // Constructor is protected -- cannot use new
+      Singleton s1 = Singleton.Instance();
+      Singleton s2 = Singleton.Instance();
+ 
+      // Test for same instance
+      if (s1 == s2)
+      {
+        Console.WriteLine("Objects are the same instance");
+      }
+ 
+      // Wait for user
+      Console.ReadKey();
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Singleton' class
+  /// </summary>
+  class Singleton
+  {
+    private static Singleton _instance;
+ 
+    // Constructor is 'protected'
+    protected Singleton()
+    {
+    }
+ 
+    public static Singleton Instance()
+    {
+      // Uses lazy initialization.
+      // Note: this is not thread safe.
+      if (_instance == null)
+      {
+        _instance = new Singleton();
+      }
+ 
+      return _instance;
+    }
+  }
+}
+```
+Output
+```
+Objects are the same instance
+```
 
-#### Related patterns
+#### C# example
+[Server requests](https://github.com/EmiliaPavlova/DesignPatterns/tree/master/DesignPatternsExample/Singleton)
 
-#### C# examples for their use
+The example demonstrates the Singleton pattern as a LoadBalancing object. Only a single instance (the Singleton) of the class can be created because servers may dynamically come on- or off-line and every request must go throught the one object that has knowledge about the state of the webfarm. 
 
 #### A UML diagram or image of the pattern
 ![Singleton diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/singleton.gif)
 
-**Indicators in analysis:** There exists only one entity of something in the problem domain that is used by several different things. 
-**Indicators in design:** Several different client objects need to refer to the same thing and we want to make sure we don’t have more than one of them.  You only want to have one of an object but there is no higher object controlling the instantiation of the object in questions.  
-**Field notes:** You can get much the same function as Singletons with static methods.  Therefore, the Singleton should be used only when statics don’t work well.  This occurs when you need to control when the class is instantiated (that is, static members are allocated).  Another case is if you want to use polymorphism on the 
-Singleton.
+<!-- # <a id="structural"></a>Structural Design Patterns -->
+## Structural Design Patterns
+
+<!-- # <a id="behavioral"></a>Behavioral Design Patterns -->
+## Behavioral Design Patterns
