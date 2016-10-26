@@ -1,0 +1,9 @@
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatterns\AbstractFactory\bin\Debug\AbstractFactory.exe.config
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatterns\AbstractFactory\obj\Debug\AbstractFactory.csprojResolveAssemblyReference.cache
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatterns\AbstractFactory\bin\Debug\AbstractFactory.exe
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatterns\AbstractFactory\bin\Debug\AbstractFactory.pdb
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatterns\AbstractFactory\obj\Debug\AbstractFactory.exe
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatterns\AbstractFactory\obj\Debug\AbstractFactory.pdb
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\AbstractFactory\bin\Debug\AbstractFactory.exe.config
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\AbstractFactory\obj\Debug\AbstractFactory.exe
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\AbstractFactory\obj\Debug\AbstractFactory.pdb
