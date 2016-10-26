@@ -1,19 +1,21 @@
 # Design patterns
 
 Design patterns are general reusable solutions to common problems that occurred in software designing. There are broadly 3 categories of design patterns:
-[Creational](#creational-design-patterns)
-[Structural](#structural-design-patterns)
-[Behavioral](#behavioral-design-patterns)
+[Creational](#creational-design-patterns), [Structural](#structural-design-patterns) and [Behavioral](#behavioral-design-patterns)
 
 <!-- # <a id="creational"></a>Creational Design Patterns -->
 ## Creational Design Patterns
 
 The purpose of creational design patterns is to create or instantiate objects.
 
-[Abstract factory](#abstract-factory)
-[Builder](#builder)
-[Factory Method](#factory-method)
-[Prototype](#prototype)
+[Abstract factory](#abstract-factory)	
+
+[Builder](#builder)	
+
+[Factory Method](#factory-method)	
+
+[Prototype](#prototype)	
+
 [Singleton](#singleton)
 
 ### Abstract factory 	
@@ -755,3 +757,7 @@ The example demonstrates the Singleton pattern as a LoadBalancing object. Only a
 
 <!-- # <a id="behavioral"></a>Behavioral Design Patterns -->
 ## Behavioral Design Patterns
+
+
+http://www.oodesign.com/structural-patterns/
+http://www.dofactory.com/net/adapter-design-pattern
