@@ -1,0 +1,6 @@
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Proxy\bin\Debug\Proxy.exe.config
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Proxy\bin\Debug\Proxy.exe
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Proxy\bin\Debug\Proxy.pdb
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Proxy\obj\Debug\Proxy.csprojResolveAssemblyReference.cache
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Proxy\obj\Debug\Proxy.exe
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Proxy\obj\Debug\Proxy.pdb

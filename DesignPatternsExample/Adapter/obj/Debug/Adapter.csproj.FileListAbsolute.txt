@@ -1,0 +1,6 @@
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Adapter\bin\Debug\Adapter.exe.config
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Adapter\bin\Debug\Adapter.exe
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Adapter\bin\Debug\Adapter.pdb
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Adapter\obj\Debug\Adapter.csprojResolveAssemblyReference.cache
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Adapter\obj\Debug\Adapter.exe
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\Adapter\obj\Debug\Adapter.pdb
