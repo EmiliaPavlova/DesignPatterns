@@ -1328,13 +1328,145 @@ The example demonstrates the Decorator pattern in which 'borrowable' functionali
 ### Facade
 
 #### Motivation
+Facade pattern hides the complexities of the system and provides an interface to the client using which the client can access the system. This type of design pattern comes under structural pattern as this pattern adds an interface to existing system to hide its complexities.
+This pattern involves a single class which provides simplified methods required by client and delegates calls to methods of existing system classes.
+
 #### Intent
+Provide a unified interface to a set of interfaces in a subsystem. Façade defines a higher-level interface that makes the subsystem easier to use. 
+
 #### Applicability
+
 #### Known uses
+
 #### Implementation
+The Façade pattern is simple to implement. It uses the C# concept of namespaces. Classes in namespaces have the facility to define accessibility as internal or public. If accessibility is defined as internal, the member is visible only in the assembly in which the namespace is compiled. In a very large system, the client's GUI will be in a different namespace from the library, so we can enforce the Façade. 
+Alternative implementations of the Façade pattern will be discussed shortly.
+
 #### Participants
-#### Structure
+
+ - Facade - knows which subsystem classes are responsible for a request and delegates client requests to appropriate subsystem objects.
+ - Subsystem classes - implement subsystem functionality, handle work assigned by the Facade object and have no knowledge of the facade and keep no reference to it. 
+
+#### Structural code in C# 
+```
+using System;
+ 
+namespace Facade.Structural
+{
+  /// <summary>
+  /// MainApp startup class for Structural
+  /// Facade Design Pattern.
+  /// </summary>
+  class MainApp
+  {
+    /// <summary>
+    /// Entry point into console application.
+    /// </summary>
+    public static void Main()
+    {
+      Facade facade = new Facade();
+ 
+      facade.MethodA();
+      facade.MethodB();
+ 
+      // Wait for user
+      Console.ReadKey();
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Subsystem ClassA' class
+  /// </summary>
+  class SubSystemOne
+  {
+    public void MethodOne()
+    {
+      Console.WriteLine(" SubSystemOne Method");
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Subsystem ClassB' class
+  /// </summary>
+  class SubSystemTwo
+  {
+    public void MethodTwo()
+    {
+      Console.WriteLine(" SubSystemTwo Method");
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Subsystem ClassC' class
+  /// </summary>
+  class SubSystemThree
+  {
+    public void MethodThree()
+    {
+      Console.WriteLine(" SubSystemThree Method");
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Subsystem ClassD' class
+  /// </summary>
+  class SubSystemFour
+  {
+    public void MethodFour()
+    {
+      Console.WriteLine(" SubSystemFour Method");
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Facade' class
+  /// </summary>
+  class Facade
+  {
+    private SubSystemOne _one;
+    private SubSystemTwo _two;
+    private SubSystemThree _three;
+    private SubSystemFour _four;
+ 
+    public Facade()
+    {
+      _one = new SubSystemOne();
+      _two = new SubSystemTwo();
+      _three = new SubSystemThree();
+      _four = new SubSystemFour();
+    }
+ 
+    public void MethodA()
+    {
+      Console.WriteLine("\nMethodA() ---- ");
+      _one.MethodOne();
+      _two.MethodTwo();
+      _four.MethodFour();
+    }
+ 
+    public void MethodB()
+    {
+      Console.WriteLine("\nMethodB() ---- ");
+      _two.MethodTwo();
+      _three.MethodThree();
+    }
+  }
+}
+```
+Output
+```
+MethodA() ----
+SubSystemOne Method
+SubSystemTwo Method
+SubSystemFour Method
+
+MethodB() ----
+SubSystemTwo Method
+SubSystemThree Method
+```
+
 #### Related patterns
+
 #### C# examples for their use
 
 #### A UML diagram or image of the pattern
@@ -1473,3 +1605,7 @@ The example demonstrates the Proxy pattern for a Math object represented by a Ma
 
 <!-- # <a id="behavioral"></a>Behavioral Design Patterns -->
 ## Behavioral Design Patterns
+
+
+http://www.oodesign.com/structural-patterns/
+http://www.dofactory.com/net/adapter-design-pattern
