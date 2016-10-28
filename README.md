@@ -3,6 +3,8 @@
 Design patterns are general reusable solutions to common problems that occurred in software designing. There are broadly 3 categories of design patterns:
 [Creational](#creational-design-patterns), [Structural](#structural-design-patterns) and [Behavioral](#behavioral-design-patterns)
 
+----------
+
 <!-- # <a id="creational"></a>Creational Design Patterns -->
 ## Creational Design Patterns
 
@@ -17,6 +19,9 @@ The purpose of creational design patterns is to create or instantiate objects.
 [Prototype](#prototype)	
 
 [Singleton](#singleton)
+
+
+----------
 
 ### Abstract factory 	
 
@@ -217,6 +222,8 @@ The example demonstrates the creation of different animal worlds using different
 #### A UML diagram or image of the pattern
 ![Abstract factory diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/abstract.gif)
 
+----------
+
 ### Builder 
 
 #### Motivation
@@ -390,6 +397,8 @@ The example demonstates the Builder pattern in which different vehicles are asse
 #### A UML diagram or image of the pattern
 ![Builder diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/builder.gif)
 
+----------
+
 <!-- # <a id="factory-method"></a>Factory Method -->
 ### Factory Method 
 
@@ -520,6 +529,8 @@ The example demonstrates the Factory method offering flexibility in creating dif
 
 #### A UML diagram or image of the pattern
 ![Factory method diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/factory.gif)
+
+----------
 
 <!-- # <a id="prototype"></a>Prototype -->
 ### Prototype 
@@ -656,6 +667,8 @@ The example demonstrates the Prototype pattern in which new Color objects are cr
 #### A UML diagram or image of the pattern
 ![Prototype diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/prototype.gif)
 
+----------
+
 <!-- # <a id="singleton"></a>Singleton -->
 ### Singleton 
 
@@ -751,6 +764,8 @@ The example demonstrates the Singleton pattern as a LoadBalancing object. Only a
 #### A UML diagram or image of the pattern
 ![Singleton diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/singleton.gif)
 
+----------
+
 <!-- # <a id="structural"></a>Structural Design Patterns -->
 ## Structural Design Patterns
 
@@ -770,6 +785,8 @@ Unlike creational patterns, which are mostly different ways to fulfill the same 
 [Flyweight](#flyweight)
 
 [Proxy](#proxy)
+
+----------
 
 ### Adapter
 
@@ -870,6 +887,8 @@ The example demonstrates the use of a legacy chemical databank. Chemical compoun
 
 #### A UML diagram or image of the pattern
 ![Adapter diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/adapter.gif)
+
+----------
 
 ### Bridge
 
@@ -1005,6 +1024,8 @@ The example demonstrates the Bridge pattern in which a BusinessObject abstractio
 
 #### A UML diagram or image of the pattern
 ![Bridge diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/bridge.gif)
+
+----------
 
 ### Composite
 
@@ -1183,6 +1204,8 @@ The example demonstrates the Composite pattern used in building a graphical tree
 #### A UML diagram or image of the pattern
 ![Composite diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/composite.gif)
 
+----------
+
 ### Decorator
 
 #### Motivation
@@ -1324,6 +1347,8 @@ The example demonstrates the Decorator pattern in which 'borrowable' functionali
 
 #### A UML diagram or image of the pattern
 ![Decorator diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/decorator.gif)
+
+----------
 
 ### Facade
 
@@ -1472,6 +1497,8 @@ SubSystemThree Method
 #### A UML diagram or image of the pattern
 ![Facade diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/facade.gif)
 
+----------
+
 ### Flyweight
 
 #### Motivation
@@ -1486,6 +1513,8 @@ SubSystemThree Method
 
 #### A UML diagram or image of the pattern
 ![Flyweight diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/flyweight.gif)
+
+----------
 
 ### Proxy
 
@@ -1603,6 +1632,7 @@ The example demonstrates the Proxy pattern for a Math object represented by a Ma
 #### A UML diagram or image of the pattern
 ![Proxy diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/proxy.gif)
 
+
+----------
 <!-- # <a id="behavioral"></a>Behavioral Design Patterns -->
 ## Behavioral Design Patterns
-
