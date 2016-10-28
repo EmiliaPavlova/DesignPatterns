@@ -1606,6 +1606,3 @@ The example demonstrates the Proxy pattern for a Math object represented by a Ma
 <!-- # <a id="behavioral"></a>Behavioral Design Patterns -->
 ## Behavioral Design Patterns
 
-
-http://www.oodesign.com/structural-patterns/
-http://www.dofactory.com/net/adapter-design-pattern
