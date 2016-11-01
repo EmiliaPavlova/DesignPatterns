@@ -1502,14 +1502,137 @@ SubSystemThree Method
 ### Flyweight
 
 #### Motivation
+Some programs require a large number of objects that have some shared state among them. Consider for example a game of war, were there is a large number of soldier objects; a soldier object maintain the graphical representation of a soldier, soldier behavior such as motion, and firing weapons, in addition soldier's health and location on the war terrain. Creating a large number of soldier objects is a necessity however it would incur a huge memory cost. Note that although the representation and behavior of a soldier is the same their health and location can vary greatly. 
+
 #### Intent
+The intent of this pattern is to use sharing to support a large number of objects that have part of their internal state in common where the other part of state can vary.
+
 #### Applicability
+The flyweight pattern applies to a program using a huge number of objects that have part of their internal state in common where the other part of state can vary. The pattern is used when the larger part of the object's state can be made extrinsic (external to that object).
+
 #### Known uses
+Games with graphics as discussed with the War Game Example.
+Text Editors: Object oriented text editors need to create Character Objects to represent each character that is in the document. A Character object maintains information about what is the character, what is its font, what is the size of the character, as well as character location inside the document. A document typically consists of extremely large number of character objects which requires large memory. The number of characters in general (Digits, Letters, Other special characters) is known and is fixed, and the fonts that can be applied to each character are also known, thus by creating a Letter flyweight that maintains Character Type (letter, digit, etc.), as well as font, and by creating a Letter Client object that only maintains each character's location inside the document, we have reduced the editor's memory requirements drastically. 
+
 #### Implementation
+A client needs a flyweight object; it calls the factory to get the flyweight object. The factory checks a pool of flyweights to determine if a flyweight object of the requested type is in the pool, if there is, the reference to that object is returned. If there is no object of the required type, the factory creates a flyweight of the requested type, adds it to the pool, and returns a reference to the flyweight. The flyweight maintains intrinsic state (state that is shared among the large number of objects that we have created the flyweight for) and provides methods to manipulate external state (State that vary from object to object and is not common among the objects we have created the flyweight for).
+
 #### Participants
-#### Structure
+ - Flyweight - Declares an interface through which flyweights can receive and act on extrinsic state.
+ - ConcreteFlyweight - Implements the Flyweight interface and stores intrinsic state. A ConcreteFlyweight object must be sharable. The Concrete flyweight object must maintain state that it is intrinsic to it, and must be able to manipulate state that is extrinsic. In the war game example graphical representation is an intrinsic state, where location and health states are extrinsic. Soldier moves, the motion behavior manipulates the external state (location) to create a new location.
+ - FlyweightFactory - The factory creates and manages flyweight objects. In addition the factory ensures sharing of the flyweight objects. The factory maintains a pool of different flyweight objects and returns an object from the pool if it is already created, adds one to the pool and returns it in case it is new.
+ - In the war example a Soldier Flyweight factory can create two types of flyweights : a Soldier flyweight, as well as a Colonel Flyweight. When the Client asks the Factory for a soldier, the factory checks to see if there is a soldier in the pool, if there is, it is returned to the client, if there is no soldier in pool, a soldier is created, added to pool, and returned to the client, the next time a client asks for a soldier, the soldier created previously is returned, no new soldier is created.
+    Client - A client maintains references to flyweights in addition to computing and maintaining extrinsic state
+
+#### Structural code in C# 
+```
+using System;
+using System.Collections;
+ 
+namespace Flyweight.Structural
+{
+  /// <summary>
+  /// MainApp startup class for Structural 
+  /// Flyweight Design Pattern.
+  /// </summary>
+  class MainApp
+  {
+    /// <summary>
+    /// Entry point into console application.
+    /// </summary>
+    static void Main()
+    {
+      // Arbitrary extrinsic state
+      int extrinsicstate = 22;
+ 
+      FlyweightFactory factory = new FlyweightFactory();
+ 
+      // Work with different flyweight instances
+      Flyweight fx = factory.GetFlyweight("X");
+      fx.Operation(--extrinsicstate);
+ 
+      Flyweight fy = factory.GetFlyweight("Y");
+      fy.Operation(--extrinsicstate);
+ 
+      Flyweight fz = factory.GetFlyweight("Z");
+      fz.Operation(--extrinsicstate);
+ 
+      UnsharedConcreteFlyweight fu = new UnsharedConcreteFlyweight();
+      fu.Operation(--extrinsicstate);
+ 
+      // Wait for user
+      Console.ReadKey();
+    }
+  }
+ 
+  /// <summary>
+  /// The 'FlyweightFactory' class
+  /// </summary>
+  class FlyweightFactory
+  {
+    private Hashtable flyweights = new Hashtable();
+ 
+    // Constructor
+    public FlyweightFactory()
+    {
+      flyweights.Add("X", new ConcreteFlyweight());
+      flyweights.Add("Y", new ConcreteFlyweight());
+      flyweights.Add("Z", new ConcreteFlyweight());
+    }
+ 
+    public Flyweight GetFlyweight(string key)
+    {
+      return ((Flyweight)flyweights[key]);
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Flyweight' abstract class
+  /// </summary>
+  abstract class Flyweight
+  {
+    public abstract void Operation(int extrinsicstate);
+  }
+ 
+  /// <summary>
+  /// The 'ConcreteFlyweight' class
+  /// </summary>
+  class ConcreteFlyweight : Flyweight
+  {
+    public override void Operation(int extrinsicstate)
+    {
+      Console.WriteLine("ConcreteFlyweight: " + extrinsicstate);
+    }
+  }
+ 
+  /// <summary>
+  /// The 'UnsharedConcreteFlyweight' class
+  /// </summary>
+  class UnsharedConcreteFlyweight : Flyweight
+  {
+    public override void Operation(int extrinsicstate)
+    {
+      Console.WriteLine("UnsharedConcreteFlyweight: " + extrinsicstate);
+    }
+  }
+}
+```
+Output
+```
+ConcreteFlyweight: 21
+ConcreteFlyweight: 20
+ConcreteFlyweight: 19
+UnsharedConcreteFlyweight: 18
+```
+
 #### Related patterns
+Factory and Singleton patterns - Flyweights are usually created using a factory and the Singleton is applied to that factory so that for each type or category of Flyweights a single instance is returned.
+State and Strategy Patterns - State and Strategy objects are usually implemented as Flyweights.
+
 #### C# examples for their use
+[Pointsizes](https://github.com/EmiliaPavlova/DesignPatterns/tree/master/DesignPatternsExample/Flyweight)
+
+The example demonstrates the Flyweight pattern in which a relatively small number of Character objects is shared many times by a document that has potentially many characters. 
 
 #### A UML diagram or image of the pattern
 ![Flyweight diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/flyweight.gif)
@@ -1632,7 +1755,389 @@ The example demonstrates the Proxy pattern for a Math object represented by a Ma
 #### A UML diagram or image of the pattern
 ![Proxy diagram](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/proxy.gif)
 
+----------
+
+## Behavioral Design Patterns
+
+Behavioral design patterns are design patterns that identify common communication patterns between objects and realize these patterns. By doing so, these patterns increase flexibility in carrying out this communication.
+
+[Chain of responsibility](#chain-of-responsibility)
+
+[Command](#command)	
+
+[Interpreter](#interpreter)	
+
+[Iterator](#iterator)	
+
+[Mediator](#mediator)	
+
+[Memento](#memento)
+
+[Null Object](#null-object)
+
+[Observer](#observer)
+
+[State](#state)
+
+[Strategy](#strategy)
+
+[Template method](#template-method)
+
+[Visitor](#visitor)
 
 ----------
-<!-- # <a id="behavioral"></a>Behavioral Design Patterns -->
-## Behavioral Design Patterns
+
+### Chain of responsibility
+A way of passing a request between a chain of objects
+
+#### Motivation
+In writing an application of any kind, it often happens that the event generated by one object needs to be handled by another one. And we also happen to be denied access to the object which needs to handle the event. In this case there are two possibilities: there is the beginner/lazy approach of making everything public, creating reference to every object and continuing from there and then there is the expert approach of using the Chain of Responsibility.
+
+The Chain of Responsibility design pattern allows an object to send a command without knowing what object will receive and handle it. The request is sent from one object to another making them parts of a chain and each object in this chain can handle the command, pass it on or do both. 
+
+#### Intent
+It avoids coupling the sender of a request to its receiver, giving this way other objects the possibility of handling the request too. Chain the receiving objects and pass the request along the chain until an object handles it. 
+
+#### Applicability
+A few situations when using the Chain of Responsibility is more effective:
+
+ - More than one object can handle a command
+ - The handler is not known in advance
+ - The handler should be determined automatically
+ - It’s wished that the request is addressed to a group of objects without explicitly specifying its receiver
+ - The group of objects that may handle the command must be specified in a dynamic way
+
+#### Known uses
+The most usual example of a machine using the Chain of Responsibility is the vending machine coin slot: rather than having a slot for each type of coin, the machine has only one slot for all of them. The dropped coin is routed to the appropriate storage place that is determined by the receiver of the command.
+
+#### Implementation
+The Client in need of a request to be handled sends it to the chain of handlers, which are classes that extend the Handler class. Each of the handlers in the chain takes its turn at trying to handle the request it receives from the client. If ConcreteHandler_i can handle it, then the request is handled, if not it is sent to the handler ConcreteHandler_i+1, the next one in the chain.
+
+#### Participants
+Handler - defines an interface for handling requests
+
+ - RequestHandler - handles the requests it is responsible for
+ - If it can handle the request it does so, otherwise it sends the request to its successor
+ - Client - sends commands to the first object in the chain that may handle the command
+ - 
+#### Structural code in C# 
+```
+using System;
+ 
+namespace Chain.Structural
+{
+  /// <summary>
+  /// MainApp startup class for Structural
+  /// Chain of Responsibility Design Pattern.
+  /// </summary>
+  class MainApp
+  {
+    /// <summary>
+    /// Entry point into console application.
+    /// </summary>
+    static void Main()
+    {
+      // Setup Chain of Responsibility
+      Handler h1 = new ConcreteHandler1();
+      Handler h2 = new ConcreteHandler2();
+      Handler h3 = new ConcreteHandler3();
+      h1.SetSuccessor(h2);
+      h2.SetSuccessor(h3);
+ 
+      // Generate and process request
+      int[] requests = { 2, 5, 14, 22, 18, 3, 27, 20 };
+ 
+      foreach (int request in requests)
+      {
+        h1.HandleRequest(request);
+      }
+ 
+      // Wait for user
+      Console.ReadKey();
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Handler' abstract class
+  /// </summary>
+  abstract class Handler
+  {
+    protected Handler successor;
+ 
+    public void SetSuccessor(Handler successor)
+    {
+      this.successor = successor;
+    }
+ 
+    public abstract void HandleRequest(int request);
+  }
+ 
+  /// <summary>
+  /// The 'ConcreteHandler1' class
+  /// </summary>
+  class ConcreteHandler1 : Handler
+  {
+    public override void HandleRequest(int request)
+    {
+      if (request >= 0 && request < 10)
+      {
+        Console.WriteLine("{0} handled request {1}",
+          this.GetType().Name, request);
+      }
+      else if (successor != null)
+      {
+        successor.HandleRequest(request);
+      }
+    }
+  }
+ 
+  /// <summary>
+  /// The 'ConcreteHandler2' class
+  /// </summary>
+  class ConcreteHandler2 : Handler
+  {
+    public override void HandleRequest(int request)
+    {
+      if (request >= 10 && request < 20)
+      {
+        Console.WriteLine("{0} handled request {1}",
+          this.GetType().Name, request);
+      }
+      else if (successor != null)
+      {
+        successor.HandleRequest(request);
+      }
+    }
+  }
+ 
+  /// <summary>
+  /// The 'ConcreteHandler3' class
+  /// </summary>
+  class ConcreteHandler3 : Handler
+  {
+    public override void HandleRequest(int request)
+    {
+      if (request >= 20 && request < 30)
+      {
+        Console.WriteLine("{0} handled request {1}",
+          this.GetType().Name, request);
+      }
+      else if (successor != null)
+      {
+        successor.HandleRequest(request);
+      }
+    }
+  }
+}
+```
+Output
+```
+ConcreteHandler1 handled request 2
+ConcreteHandler1 handled request 5
+ConcreteHandler2 handled request 14
+ConcreteHandler3 handled request 22
+ConcreteHandler2 handled request 18
+ConcreteHandler1 handled request 3
+ConcreteHandler3 handled request 27
+ConcreteHandler3 handled request 20
+```
+
+#### C# examples for their use
+[Responsibility chained lectors](https://github.com/EmiliaPavlova/DesignPatterns/tree/master/DesignPatternsExample/ChainOfResponsibility)
+
+The example demonstrates the Chain of Responsibility pattern in which several linked lectors can rate exams according the exam result or hand it off to a superior.
+
+#### A UML diagram or image of the pattern
+![Chain of Responsibility](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/chain.gif)
+
+----------
+
+### Command
+
+#### Intent
+Encapsulate a request as an object. Allows the parameterization of clients with different requests. Allows saving the requests in a queue. Supports undoable operations. 
+
+#### Applicability
+The applicability of the Command design pattern can be found in these cases below:
+
+- parameterizes objects depending on the action they must perform
+- specifies or adds in a queue and executes requests at different moments in time
+- offers support for undoable actions (the Execute method can memorize the state and allow going back to that state)
+- structures the system in high level operations that based on primitive operations
+- decouples the object that invokes the action from the object that performs the action. Due to this usage it is also known as Producer - Consumer design pattern.
+
+#### Implementation
+The Client asks for a command to be executed. The Invoker takes the command, encapsulates it and places it in a queue, in case there is something else to do first, and the ConcreteCommand that is in charge of the requested command, sending its result to the Receiver.
+
+#### Participants
+
+- Command - declares an interface for executing an operation;
+- ConcreteCommand - extends the Command interface, implementing the Execute method by invoking the corresponding operations on Receiver. It defines a link between the Receiver and the action.
+- Client - creates a ConcreteCommand object and sets its receiver;
+- Invoker - asks the command to carry out the request;
+- Receiver - knows how to perform the operations;
+
+#### Structural code in C# 
+```
+using System;
+ 
+namespace Command.Structural
+{
+  /// <summary>
+  /// MainApp startup class for Structural 
+  /// Command Design Pattern.
+  /// </summary>
+  class MainApp
+  {
+    /// <summary>
+    /// Entry point into console application.
+    /// </summary>
+    static void Main()
+    {
+      // Create receiver, command, and invoker
+      Receiver receiver = new Receiver();
+      Command command = new ConcreteCommand(receiver);
+      Invoker invoker = new Invoker();
+ 
+      // Set and execute command
+      invoker.SetCommand(command);
+      invoker.ExecuteCommand();
+ 
+      // Wait for user
+      Console.ReadKey();
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Command' abstract class
+  /// </summary>
+  abstract class Command
+  {
+    protected Receiver receiver;
+ 
+    // Constructor
+    public Command(Receiver receiver)
+    {
+      this.receiver = receiver;
+    }
+ 
+    public abstract void Execute();
+  }
+ 
+  /// <summary>
+  /// The 'ConcreteCommand' class
+  /// </summary>
+  class ConcreteCommand : Command
+  {
+    // Constructor
+    public ConcreteCommand(Receiver receiver) :
+      base(receiver)
+    {
+    }
+ 
+    public override void Execute()
+    {
+      receiver.Action();
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Receiver' class
+  /// </summary>
+  class Receiver
+  {
+    public void Action()
+    {
+      Console.WriteLine("Called Receiver.Action()");
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Invoker' class
+  /// </summary>
+  class Invoker
+  {
+    private Command _command;
+ 
+    public void SetCommand(Command command)
+    {
+      this._command = command;
+    }
+ 
+    public void ExecuteCommand()
+    {
+     _command.Execute();
+    }
+  }
+}
+```
+Output
+```
+Called Receiver.Action()
+```
+
+#### C# examples for their use
+[Undo and Redo calculations](https://github.com/EmiliaPavlova/DesignPatterns/tree/master/DesignPatternsExample/Command)
+
+The example demonstrates the Command pattern used in a simple calculator with unlimited number of undo's and redo's.
+
+#### A UML diagram or image of the pattern
+![Command](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/command.gif)
+
+----------
+
+### Interpreter
+A way to include language elements in a program
+
+----------
+
+### Iterator
+Sequentially access the elements of a collection
+
+![Iterator](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/iterator.gif)
+
+----------
+
+### Mediator
+Defines simplified communication between classes
+
+----------
+
+### Memento
+Capture and restore an object's internal state
+
+----------
+
+### Null Object
+Designed to act as a default value of an object
+
+----------
+
+### Observer
+A way of notifying change to a number of classes
+
+![Observer](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/observer.gif)
+
+----------
+
+### State
+Alter an object's behavior when its state changes
+
+----------
+
+### Strategy
+Encapsulates an algorithm inside a class
+
+![Strategy](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/strategy.gif)
+
+----------
+
+### Template method
+Defer the exact steps of an algorithm to a subclass
+
+----------
+
+### Visitor
+Defines a new operation to a class without change
+
+----------
