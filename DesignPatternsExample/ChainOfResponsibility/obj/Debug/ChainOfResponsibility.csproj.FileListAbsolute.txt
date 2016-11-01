@@ -1,0 +1,6 @@
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\ChainOfResponsibility\bin\Debug\ChainOfResponsibility.exe.config
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\ChainOfResponsibility\bin\Debug\ChainOfResponsibility.exe
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\ChainOfResponsibility\bin\Debug\ChainOfResponsibility.pdb
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\ChainOfResponsibility\obj\Debug\ChainOfResponsibility.csprojResolveAssemblyReference.cache
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\ChainOfResponsibility\obj\Debug\ChainOfResponsibility.exe
+C:\Users\Emiliya.Pavlova\Desktop\DesignPatterns\DesignPatternsExample\ChainOfResponsibility\obj\Debug\ChainOfResponsibility.pdb
