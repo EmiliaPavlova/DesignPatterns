@@ -2092,8 +2092,176 @@ A way to include language elements in a program
 ----------
 
 ### Iterator
-Sequentially access the elements of a collection
 
+#### Motivation
+The idea of the iterator pattern is to take the responsibility of accessing and passing trough the objects of the collection and put it in the iterator object. The iterator object will maintain the state of the iteration, keeping track of the current item and having a way of identifying what elements are next to be iterated.
+
+#### Intent
+Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation.
+
+The abstraction provided by the iterator pattern allows modifying the collection implementation without making any changes outside of collection. It enables creating a general purpose GUI component that will be able to iterate through any collection of the application. 
+
+#### Applicability
+The iterator pattern allow us to:
+
+ - access contents of a collection without exposing its internal structure.
+ - support multiple simultaneous traversals of a collection.
+ - provide a uniform interface for traversing different collection. 
+
+#### Participants
+
+ - IIterator - This interface represent the AbstractIterator, defining the iterator
+ - BookIterator - This is the implementation of Iterator(implements the IIterator interface)
+ - IContainer - This is an interface defining the Agregate
+ - BooksCollection - An implementation of the collection
+
+#### Structural code in C# 
+```
+using System;
+using System.Collections;
+ 
+namespace Iterator.Structural
+{
+    /// <summary>
+    /// MainApp startup class for Structural 
+    /// Iterator Design Pattern.
+    /// </summary>
+    class MainApp
+    {
+        /// <summary>
+        /// Entry point into console application.
+        /// </summary>
+        static void Main()
+        {
+            ConcreteAggregate a = new ConcreteAggregate();
+            a[0] = "Item A";
+            a[1] = "Item B";
+            a[2] = "Item C";
+            a[3] = "Item D";
+ 
+            // Create Iterator and provide aggregate
+            Iterator i = a.CreateIterator();
+ 
+            Console.WriteLine("Iterating over collection:");
+ 
+            object item = i.First();
+            while (item != null)
+            {
+                Console.WriteLine(item);
+                item = i.Next();
+            }
+ 
+            // Wait for user
+            Console.ReadKey();
+        }
+    }
+ 
+    /// <summary>
+    /// The 'Aggregate' abstract class
+    /// </summary>
+    abstract class Aggregate
+    {
+        public abstract Iterator CreateIterator();
+    }
+ 
+    /// <summary>
+    /// The 'ConcreteAggregate' class
+    /// </summary>
+    class ConcreteAggregate : Aggregate
+    {
+        private ArrayList _items = new ArrayList();
+ 
+        public override Iterator CreateIterator()
+        {
+            return new ConcreteIterator(this);
+        }
+ 
+        // Gets item count
+        public int Count
+        {
+            get { return _items.Count; }
+        }
+ 
+        // Indexer
+        public object this[int index]
+        {
+            get { return _items[index]; }
+            set { _items.Insert(index, value); }
+        }
+    }
+ 
+    /// <summary>
+    /// The 'Iterator' abstract class
+    /// </summary>
+    abstract class Iterator
+    {
+        public abstract object First();
+        public abstract object Next();
+        public abstract bool IsDone();
+        public abstract object CurrentItem();
+    }
+ 
+    /// <summary>
+    /// The 'ConcreteIterator' class
+    /// </summary>
+    class ConcreteIterator : Iterator
+    {
+        private ConcreteAggregate _aggregate;
+        private int _current = 0;
+ 
+        // Constructor
+        public ConcreteIterator(ConcreteAggregate aggregate)
+        {
+            this._aggregate = aggregate;
+        }
+ 
+        // Gets first iteration item
+        public override object First()
+        {
+            return _aggregate[0];
+        }
+ 
+        // Gets next iteration item
+        public override object Next()
+        {
+            object ret = null;
+            if (_current < _aggregate.Count - 1)
+            {
+                ret = _aggregate[++_current];
+            }
+ 
+            return ret;
+        }
+ 
+        // Gets current iteration item
+        public override object CurrentItem()
+        {
+            return _aggregate[_current];
+        }
+ 
+        // Gets whether iterations are complete
+        public override bool IsDone()
+        {
+            return _current >= _aggregate.Count;
+        }
+    }
+}
+```
+Output
+```
+Iterating over collection:
+Item A
+Item B
+Item C
+Item D
+```
+
+#### C# examples for their use
+[Iterating an object](https://github.com/EmiliaPavlova/DesignPatterns/tree/master/DesignPatternsExample/Iterator)
+
+The example demonstrates the Iterator pattern which provides for a way to iterate over a collection of items without detailing the underlying structure of the collection.
+
+#### A UML diagram or image of the pattern
 ![Iterator](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/iterator.gif)
 
 ----------
@@ -2114,8 +2282,165 @@ Designed to act as a default value of an object
 ----------
 
 ### Observer
-A way of notifying change to a number of classes
 
+#### Motivation
+The Observer Design Pattern can be used whenever a subject has to be observed by one or more observers.
+
+#### Intent
+Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically. 
+
+#### Applicability
+The observer pattern is used when the change of a state in one object must be reflected in another object without keeping the objects tight coupled and when the framework we are writing needs to be enhanced in future with new observers with minimal changes.
+
+#### Known uses
+Model View Controller Pattern - The observer pattern is used in the model view controller (MVC) architectural pattern. In MVC the this pattern is used to decouple the model from the view. View represents the Observer and the model is the Observable object.
+Event management - This is one of the domains where the Observer patterns is extensively used. Swing and .Net are extensively using the Observer pattern for implementing the events mechanism.
+
+#### Implementation
+The main framework instantiate the ConcreteObservable object. Then it instantiate and attaches the concrete observers to it using the methods defined in the Observable interface. Each time the state of the subject it's changing it notifies all the attached Observers using the methods defined in the Observer interface. When a new Observer is added to the application, all we need to do is to instantiate it in the main framework and to add attach it to the Observable object. The classes already created will remain unchanged.
+
+#### Participants
+
+ - Observable - interface or abstract class defining the operations for attaching and de-attaching observers to the client. In the GOF book this class/interface is known as Subject.
+ - ConcreteObservable - concrete Observable class. It maintain the state of the object and when a change in the state occurs it notifies the attached Observers.
+ - Observer - interface or abstract class defining the operations to be used to notify this object.
+ - ConcreteObserverA, ConcreteObserver2 - concrete Observer implementations.
+
+
+#### Structural code in C# 
+```
+using System;
+using System.Collections.Generic;
+ 
+namespace Observer.Structural
+{
+  /// <summary>
+  /// MainApp startup class for Structural 
+  /// Observer Design Pattern.
+  /// </summary>
+  class MainApp
+  {
+    /// <summary>
+    /// Entry point into console application.
+    /// </summary>
+    static void Main()
+    {
+      // Configure Observer pattern
+      ConcreteSubject s = new ConcreteSubject();
+ 
+      s.Attach(new ConcreteObserver(s, "X"));
+      s.Attach(new ConcreteObserver(s, "Y"));
+      s.Attach(new ConcreteObserver(s, "Z"));
+ 
+      // Change subject and notify observers
+      s.SubjectState = "ABC";
+      s.Notify();
+ 
+      // Wait for user
+      Console.ReadKey();
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Subject' abstract class
+  /// </summary>
+  abstract class Subject
+  {
+    private List<Observer> _observers = new List<Observer>();
+ 
+    public void Attach(Observer observer)
+    {
+      _observers.Add(observer);
+    }
+ 
+    public void Detach(Observer observer)
+    {
+      _observers.Remove(observer);
+    }
+ 
+    public void Notify()
+    {
+      foreach (Observer o in _observers)
+      {
+        o.Update();
+      }
+    }
+  }
+ 
+  /// <summary>
+  /// The 'ConcreteSubject' class
+  /// </summary>
+  class ConcreteSubject : Subject
+  {
+    private string _subjectState;
+ 
+    // Gets or sets subject state
+    public string SubjectState
+    {
+      get { return _subjectState; }
+      set { _subjectState = value; }
+    }
+  }
+ 
+  /// <summary>
+  /// The 'Observer' abstract class
+  /// </summary>
+  abstract class Observer
+  {
+    public abstract void Update();
+  }
+ 
+  /// <summary>
+  /// The 'ConcreteObserver' class
+  /// </summary>
+  class ConcreteObserver : Observer
+  {
+    private string _name;
+    private string _observerState;
+    private ConcreteSubject _subject;
+ 
+    // Constructor
+    public ConcreteObserver(
+      ConcreteSubject subject, string name)
+    {
+      this._subject = subject;
+      this._name = name;
+    }
+ 
+    public override void Update()
+    {
+      _observerState = _subject.SubjectState;
+      Console.WriteLine("Observer {0}'s new state is {1}",
+        _name, _observerState);
+    }
+ 
+    // Gets or sets subject
+    public ConcreteSubject Subject
+    {
+      get { return _subject; }
+      set { _subject = value; }
+    }
+  }
+}
+```
+Output
+```
+Observer X's new state is ABC
+Observer Y's new state is ABC
+Observer Z's new state is ABC
+```
+
+#### Related patterns
+Factory pattern - It's very likely to use the factory pattern to create the Observers so no changes will be required even in the main framework. The new observers can be added directly in the configuration files.
+Template Method - The observer pattern can be used in conjunction with the Template Method Pattern to make sure that Subject state is self-consistent before notification
+Mediator Pattern - The mediator pattern can be used when we have cases of complex cases of many subjects an many observers
+
+#### C# examples for their use
+[Notifying on value changes](https://github.com/EmiliaPavlova/DesignPatterns/tree/master/DesignPatternsExample/Observer)
+
+The example demonstrates the Observer pattern in which registered investors are notified every time a stock changes value. 
+
+#### A UML diagram or image of the pattern
 ![Observer](https://github.com/EmiliaPavlova/DesignPatterns/blob/master/imgs/observer.gif)
 
 ----------
@@ -2141,3 +2466,6 @@ Defer the exact steps of an algorithm to a subclass
 Defines a new operation to a class without change
 
 ----------
+
+http://www.oodesign.com/structural-patterns/
+http://www.dofactory.com/net/adapter-design-pattern
